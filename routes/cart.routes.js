@@ -32,4 +32,15 @@ router.get('/:id', async (req, res) => {
     });
 });
 
+router.post('/:id/select', async (req, res) => {
+  const id = req.params.id;
+
+  await cart
+    .setSelectedCart(id)
+    .then(cart => res.json(cart))
+    .catch(err => {
+      utils.handleError(err, res);
+    });
+});
+
 module.exports = router;

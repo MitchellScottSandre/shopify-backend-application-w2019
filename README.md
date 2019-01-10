@@ -21,4 +21,5 @@ Create a new Product:
 Create a new Cart:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "name": "My Cart" }' http://localhost:8000/carts`
 
-S
+Set Selected Cart by ID:
+`curl -i -X POST http://localhost:8000/carts/1/select`

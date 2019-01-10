@@ -38,7 +38,26 @@ function createNewCart(cartName) {
 
     writeCartsData();
 
-    resolve(newCart);
+    resolve();
+  });
+}
+
+function setSelectedCart(id) {
+  return new Promise((resolve, reject) => {
+    if (!isValidCartId(id)) {
+      reject({
+        message: 'Set Selected Cart: Invalid cart ID provided',
+        status: 404
+      });
+
+      return;
+    }
+
+    cartsData.selected_cart_id = id;
+
+    writeCartsData();
+
+    resolve();
   });
 }
 
@@ -59,5 +78,6 @@ function writeCartsData() {
 module.exports = {
   getCarts,
   createNewCart,
-  getCartById
+  getCartById,
+  setSelectedCart
 };
