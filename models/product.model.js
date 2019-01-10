@@ -37,7 +37,7 @@ function purchaseProductById(id) {
       });
     }
 
-    const product = products.find(p => p.id == id);
+    let product = products.find(p => p.id == id);
 
     if (product.inventory_count == 0) {
       reject({
@@ -59,8 +59,7 @@ function isValidProductId(id) {
 }
 
 function writeProduct(product) {
-  console.log('before');
-  products[product.id] = product;
+  products[product.id - 1] = product;
   utils.writeToFile('data/products.json', products); // file name is relative to process.cwd()
 }
 
