@@ -1,8 +1,4 @@
 [
-  {
-    "id": 1,
-    "title": "Soccer Ball",
-    "price": 15.99,
-    "inventory_count": 100
-  }
+  { "id": 1, "title": "Soccer Ball", "price": 15.99, "inventory_count": 6 },
+  { "id": 1, "title": "Soccer Ball", "price": 15.99, "inventory_count": 6 }
 ]

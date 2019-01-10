@@ -8,6 +8,13 @@ function handleError(err, res) {
   }
 }
 
+function writeToFile(fileName, data) {
+  fs.writeFile(fileName, JSON.stringify(data), error => {
+    console.log(error);
+  });
+}
+
 module.exports = {
-  handleError
+  handleError,
+  writeToFile
 };
