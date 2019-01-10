@@ -1,8 +1,19 @@
-Sample GET Operation (All):
-curl -i -X GET http://localhost:8000/products
+### Installation and Usage
 
-Sample GET Operation (By ID):
-curl -i -X GET http://localhost:8000/products/1
+Download the code: `git clone https://github.com/MitchellScottSandre/shopify-backend-application-w2019.git`
+Install dependencies: `npm install`
+Run: `npm start`
 
-Sample POST Operation:
-curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Football", "price": 10.00, "inventory_count": 100 }' http://localhost:8000/products
+### Sample Operations
+
+Get All Products
+`curl -i -X GET http://localhost:8000/products`
+
+Get Product by ID:
+`curl -i -X GET http://localhost:8000/products/1`
+
+Purchase a Product by ID:
+`curl -i -X GET http://localhost:8000/products/1/purchase`
+
+Create a new Product:
+`curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Football", "price": 10.00, "inventory_count": 100 }' http://localhost:8000/products`
