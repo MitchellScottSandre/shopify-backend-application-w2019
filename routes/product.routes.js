@@ -35,4 +35,13 @@ router.get('/:id', async (req, res) => {
     });
 });
 
+router.post('/', async (req, res) => {
+  await product
+    .createProduct(req.body)
+    .then(product => res.json(product))
+    .catch(err => {
+      utils.handleError(err, res);
+    });
+});
+
 module.exports = router;

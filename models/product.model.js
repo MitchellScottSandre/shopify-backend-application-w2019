@@ -2,14 +2,9 @@ const productsFileName = '../data/products.json';
 const products = require(productsFileName);
 const utils = require('../utils/utils');
 
-// TODO: return only products with available inventory
 function getProducts() {
   return new Promise((resolve, reject) => {
-    if (products.length === 0) {
-      console.log('NO PRODUCTS');
-    }
-
-    resolve(products);
+    resolve(products.filter(p => p.inventory_count > 0));
   });
 }
 
@@ -20,6 +15,8 @@ function getProductById(id) {
         message: 'Get Product: Invalid product ID provided',
         status: 404
       });
+
+      return;
     }
 
     const product = products.find(p => p.id == id);
@@ -35,6 +32,8 @@ function purchaseProductById(id) {
         message: 'Purchase Product: Invalid product ID provided',
         status: 404
       });
+
+      return;
     }
 
     let product = products.find(p => p.id == id);
@@ -44,27 +43,68 @@ function purchaseProductById(id) {
         message: 'Purchase Product: Product inventory count is 0',
         status: 404
       });
+
+      return;
     }
 
     product.inventory_count--;
 
-    writeProduct(product);
+    products[product.id - 1] = product;
+
+    writeProducts();
 
     resolve(product);
   });
 }
 
+function createProduct(product) {
+  return new Promise((resolve, reject) => {
+    if (!isValidPostProduct(product)) {
+      reject({
+        message: 'Post Product: Invalid Product',
+        status: 404
+      });
+
+      return;
+    }
+    const newProduct = {
+      id: getNextProductId(),
+      ...product
+    };
+
+    products.push(newProduct);
+
+    writeProducts();
+
+    resolve(newProduct);
+  });
+}
+
+// Helper Functions
+
 function isValidProductId(id) {
   return id >= 1 && id <= products.length;
 }
 
-function writeProduct(product) {
-  products[product.id - 1] = product;
+function isValidPostProduct(product) {
+  return (
+    product.hasOwnProperty('title') &&
+    product.hasOwnProperty('price') &&
+    product.hasOwnProperty('inventory_count')
+  );
+}
+
+function writeProducts() {
   utils.writeToFile('data/products.json', products); // file name is relative to process.cwd()
+}
+
+function getNextProductId() {
+  return products.length + 1;
 }
 
 module.exports = {
   getProducts,
   getProductById,
+  createProduct,
   purchaseProductById
 };
