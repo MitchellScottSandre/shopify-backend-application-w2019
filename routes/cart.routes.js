@@ -21,4 +21,15 @@ router.post('/', async (req, res) => {
     });
 });
 
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+
+  await cart
+    .getCartById(id)
+    .then(cart => res.json(cart))
+    .catch(err => {
+      utils.handleError(err, res);
+    });
+});
+
 module.exports = router;

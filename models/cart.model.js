@@ -8,8 +8,24 @@ function getCarts() {
   });
 }
 
+function getCartById(id) {
+  return new Promise((resolve, reject) => {
+    if (!isValidCartId(id)) {
+      reject({
+        message: 'Get Cart: Invalid cart ID provided',
+        status: 404
+      });
+
+      return;
+    }
+
+    const cart = cartsData.carts.find(c => c.id == id);
+
+    resolve(cart);
+  });
+}
+
 function createNewCart(cartName) {
-  console.log('create cart called', cartName);
   return new Promise((resolve, reject) => {
     const newCart = {
       id: getNextCartId(),
@@ -28,6 +44,10 @@ function createNewCart(cartName) {
 
 // Helper Functions
 
+function isValidCartId(id) {
+  return id >= 1 && id <= cartsData.carts.length;
+}
+
 function getNextCartId() {
   return cartsData.carts.length + 1;
 }
@@ -38,5 +58,6 @@ function writeCartsData() {
 
 module.exports = {
   getCarts,
-  createNewCart
+  createNewCart,
+  getCartById
 };
