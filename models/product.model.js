@@ -1,6 +1,6 @@
 const productsFileName = '../data/products.json';
 const products = require(productsFileName);
-const utils = require('../utils/utils');
+const utils = require('../utils');
 
 function getProducts() {
   return new Promise((resolve, reject) => {
