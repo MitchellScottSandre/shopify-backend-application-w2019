@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const product = require('../models/product.model');
+const cart = require('../models/cart.model');
 const utils = require('../utils');
 
 router.get('/', async (req, res) => {
@@ -27,8 +28,19 @@ router.post('/:id/purchase', async (req, res) => {
   const id = req.params.id;
 
   await product
-    .purchaseProductById(id)
-    .then(product => res.json(product))
+    .addProductToCart(id)
+    .then(cart => res.json(cart))
+    .catch(err => {
+      utils.handleError(err, res);
+    });
+});
+
+router.post('/:id/addToCart', async (req, res) => {
+  const id = req.params.id;
+  console.log('add to cart called for id ', id);
+  await cart
+    .addProductToCart(id)
+    .then(cart => res.json(cart))
     .catch(err => {
       utils.handleError(err, res);
     });

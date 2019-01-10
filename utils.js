@@ -1,4 +1,8 @@
 const fs = require('fs');
+const productsFileName = './data/products.json';
+const cartsDataFileName = './data/carts.json';
+const products = require(productsFileName);
+const cartsData = require(cartsDataFileName);
 
 function handleError(err, res) {
   if (err.status) {
@@ -14,7 +18,12 @@ function writeToFile(fileName, data) {
   });
 }
 
+function isValidProductId(id) {
+  return id >= 1 && id <= products.length;
+}
+
 module.exports = {
   handleError,
-  writeToFile
+  writeToFile,
+  isValidProductId
 };

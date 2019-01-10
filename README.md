@@ -23,3 +23,6 @@ Create a new Cart:
 
 Set Selected Cart by ID:
 `curl -i -X POST http://localhost:8000/carts/1/select`
+
+Add Product to Current Selected Cart:
+`curl -i -X POST http://localhost:8000/products/1/addToCart`

@@ -1,4 +1,5 @@
 const productsFileName = '../data/products.json';
+const cartsDataFileName = '../data/carts.json';
 const products = require(productsFileName);
 const utils = require('../utils');
 
@@ -10,7 +11,7 @@ function getProducts() {
 
 function getProductById(id) {
   return new Promise((resolve, reject) => {
-    if (!isValidProductId(id)) {
+    if (!utils.isValidProductId(id)) {
       reject({
         message: 'Get Product: Invalid product ID provided',
         status: 404
@@ -27,7 +28,7 @@ function getProductById(id) {
 
 function purchaseProductById(id) {
   return new Promise((resolve, reject) => {
-    if (!isValidProductId(id)) {
+    if (!utils.isValidProductId(id)) {
       reject({
         message: 'Purchase Product: Invalid product ID provided',
         status: 404
@@ -61,7 +62,7 @@ function createProduct(product) {
   return new Promise((resolve, reject) => {
     if (!isValidPostProduct(product)) {
       reject({
-        message: 'Post Product: Invalid Product',
+        message: 'Create Product: Invalid Product',
         status: 404
       });
 
@@ -81,10 +82,6 @@ function createProduct(product) {
 }
 
 // Helper Functions
-
-function isValidProductId(id) {
-  return id >= 1 && id <= products.length;
-}
 
 function isValidPostProduct(product) {
   return (

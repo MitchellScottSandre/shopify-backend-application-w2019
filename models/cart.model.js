@@ -61,6 +61,40 @@ function setSelectedCart(id) {
   });
 }
 
+function addProductToCart(id) {
+  return new Promise((resolve, reject) => {
+    if (!utils.isValidProductId(id)) {
+      reject({
+        message: 'Add Product to Cart: Invalid Product ID',
+        status: 404
+      });
+
+      return;
+    }
+
+    if (!selectedCartExists()) {
+      reject({
+        message: 'Add Product to Cart: No Cart is Selected',
+        status: 404
+      });
+
+      return;
+    }
+
+    const selectedID = cartsData.selected_cart_id;
+    const prevProductIDs = cartsData.carts[selectedID - 1].product_ids;
+
+    cartsData.carts[selectedID - 1] = {
+      ...cartsData.carts[selectedID - 1],
+      product_ids: [...prevProductIDs, id]
+    };
+
+    writeCartsData();
+
+    resolve(cartsData.carts[selectedID - 1]);
+  });
+}
+
 // Helper Functions
 
 function isValidCartId(id) {
@@ -75,9 +109,14 @@ function writeCartsData() {
   utils.writeToFile('data/carts.json', cartsData);
 }
 
+function selectedCartExists() {
+  return cartsData.selected_cart_id != null;
+}
+
 module.exports = {
   getCarts,
   createNewCart,
   getCartById,
-  setSelectedCart
+  setSelectedCart,
+  addProductToCart
 };
