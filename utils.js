@@ -9,7 +9,7 @@ function handleError(err, res) {
 }
 
 function writeToFile(fileName, data) {
-  fs.writeFile(fileName, JSON.stringify(data), 'utf8', error => {
+  fs.writeFileSync(fileName, JSON.stringify(data), 'utf8', error => {
     console.log(error);
   });
 }

@@ -1,0 +1,4 @@
+{
+  "selected_cart_id": null,
+  "carts": [{ "id": 1, "name": "My Cart", "product_ids": [], "total_price": 0 }]
+}

@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
     });
 });
 
-router.get('/:id/purchase', async (req, res) => {
+router.post('/:id/purchase', async (req, res) => {
   const id = req.params.id;
 
   await product
