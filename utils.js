@@ -18,12 +18,12 @@ function writeToFile(fileName, data) {
   });
 }
 
-function isValidProductId(id) {
-  return id >= 1 && id <= products.length;
-}
+// function isValidProductId(id) {
+//   return id >= 1 && id <= products.length;
+// }
 
 module.exports = {
   handleError,
-  writeToFile,
-  isValidProductId
+  writeToFile
+  // isValidProductId
 };

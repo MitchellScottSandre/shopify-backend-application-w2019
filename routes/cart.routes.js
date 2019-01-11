@@ -43,4 +43,15 @@ router.post('/:id/select', async (req, res) => {
     });
 });
 
+router.post('/:id/checkout', async (req, res) => {
+  const id = req.params.id;
+
+  await cart
+    .checkoutCart(id)
+    .then(cart => res.json(cart))
+    .catch(err => {
+      utils.handleError(err, res);
+    });
+});
+
 module.exports = router;
