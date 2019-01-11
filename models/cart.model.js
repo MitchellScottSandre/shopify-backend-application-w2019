@@ -1,10 +1,23 @@
+const productsFileName = '../data/products.json';
 const cartsDataFileName = '../data/carts.json';
+const products = require(productsFileName);
 const cartsData = require(cartsDataFileName);
 const utils = require('../utils');
 
 function getCarts() {
   return new Promise((resolve, reject) => {
-    resolve(cartsData);
+    let carts = cartsData.carts.map(cart => {
+      const cartProducts = cart.product_ids.map(id => products[id - 1]);
+      return {
+        ...cart,
+        products: cartProducts
+      };
+    });
+
+    resolve({
+      selected_cart_id: cartsData.selected_cart_id,
+      carts
+    });
   });
 }
 
@@ -20,8 +33,12 @@ function getCartById(id) {
     }
 
     const cart = cartsData.carts.find(c => c.id == id);
+    const cartProducts = cart.product_ids.map(id => products[id - 1]);
 
-    resolve(cart);
+    resolve({
+      ...cart,
+      products: cartProducts
+    });
   });
 }
 
@@ -88,6 +105,8 @@ function addProductToCart(id) {
       ...cartsData.carts[selectedID - 1],
       product_ids: [...prevProductIDs, id]
     };
+
+    //TODO: update total price
 
     writeCartsData();
 
