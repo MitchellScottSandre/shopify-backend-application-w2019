@@ -12,11 +12,8 @@ Get All Products
 Get Product by ID:
 `curl -i -X GET http://localhost:8000/products/1`
 
-Purchase a Product by ID:
-`curl -i -X POST http://localhost:8000/products/1/purchase`
-
 Create a new Product:
-`curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Toy Car", "price": 4.00, "inventory_count": 55 }' http://localhost:8000/products`
+`curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Soccer Ball", "price": 23.00, "inventory_count": 20 }' http://localhost:8000/products`
 
 Create a new Cart:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "name": "My Cart" }' http://localhost:8000/carts`
@@ -26,3 +23,6 @@ Set Selected Cart by ID:
 
 Add Product to Current Selected Cart:
 `curl -i -X POST http://localhost:8000/products/1/addToCart`
+
+Checkout Cart:
+`curl -i -X POST http://localhost:8000/carts/1/checkout`

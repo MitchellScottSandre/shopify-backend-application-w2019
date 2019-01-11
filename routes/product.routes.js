@@ -24,17 +24,6 @@ router.get('/:id', async (req, res) => {
     });
 });
 
-router.post('/:id/purchase', async (req, res) => {
-  const id = req.params.id;
-
-  await product
-    .addProductToCart(id)
-    .then(cart => res.json(cart))
-    .catch(err => {
-      utils.handleError(err, res);
-    });
-});
-
 router.post('/:id/addToCart', async (req, res) => {
   const id = req.params.id;
   console.log('add to cart called for id ', id);

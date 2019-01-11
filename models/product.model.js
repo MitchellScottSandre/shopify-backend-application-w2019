@@ -24,34 +24,6 @@ function getProductById(id) {
   });
 }
 
-function purchaseProductById(id) {
-  return new Promise((resolve, reject) => {
-    if (!isValidProductId(id)) {
-      return reject({
-        message: 'Purchase Product: Invalid product ID provided',
-        status: 404
-      });
-    }
-
-    let product = products.find(p => p.id == id);
-
-    if (product.inventory_count == 0) {
-      return reject({
-        message: 'Purchase Product: Product inventory count is 0',
-        status: 404
-      });
-    }
-
-    product.inventory_count--;
-
-    products[product.id - 1] = product;
-
-    writeProducts(products);
-
-    resolve(product);
-  });
-}
-
 function createProduct(product) {
   return new Promise((resolve, reject) => {
     if (!isValidPostProduct(product)) {
@@ -99,7 +71,6 @@ module.exports = {
   getProducts,
   getProductById,
   createProduct,
-  purchaseProductById,
   isValidProductId,
   writeProducts
 };
