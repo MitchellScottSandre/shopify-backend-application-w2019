@@ -1,6 +1,7 @@
 const productsFileName = '../data/products.json';
+const cartsDataFileName = '../data/carts.json';
 const products = require(productsFileName);
-const utils = require('../utils/utils');
+const utils = require('../utils');
 
 function getProducts() {
   return new Promise((resolve, reject) => {
@@ -11,12 +12,10 @@ function getProducts() {
 function getProductById(id) {
   return new Promise((resolve, reject) => {
     if (!isValidProductId(id)) {
-      reject({
+      return reject({
         message: 'Get Product: Invalid product ID provided',
         status: 404
       });
-
-      return;
     }
 
     const product = products.find(p => p.id == id);
@@ -25,47 +24,13 @@ function getProductById(id) {
   });
 }
 
-function purchaseProductById(id) {
-  return new Promise((resolve, reject) => {
-    if (!isValidProductId(id)) {
-      reject({
-        message: 'Purchase Product: Invalid product ID provided',
-        status: 404
-      });
-
-      return;
-    }
-
-    let product = products.find(p => p.id == id);
-
-    if (product.inventory_count == 0) {
-      reject({
-        message: 'Purchase Product: Product inventory count is 0',
-        status: 404
-      });
-
-      return;
-    }
-
-    product.inventory_count--;
-
-    products[product.id - 1] = product;
-
-    writeProducts();
-
-    resolve(product);
-  });
-}
-
 function createProduct(product) {
   return new Promise((resolve, reject) => {
     if (!isValidPostProduct(product)) {
-      reject({
-        message: 'Post Product: Invalid Product',
+      return reject({
+        message: 'Create Product: Invalid Product',
         status: 404
       });
-
-      return;
     }
     const newProduct = {
       id: getNextProductId(),
@@ -74,17 +39,13 @@ function createProduct(product) {
 
     products.push(newProduct);
 
-    writeProducts();
+    writeProducts(products);
 
     resolve(newProduct);
   });
 }
 
 // Helper Functions
-
-function isValidProductId(id) {
-  return id >= 1 && id <= products.length;
-}
 
 function isValidPostProduct(product) {
   return (
@@ -94,17 +55,22 @@ function isValidPostProduct(product) {
   );
 }
 
-function writeProducts() {
-  utils.writeToFile('data/products.json', products); // file name is relative to process.cwd()
+function writeProducts(data) {
+  utils.writeToFile('data/products.json', data);
 }
 
 function getNextProductId() {
   return products.length + 1;
 }
 
+function isValidProductId(id) {
+  return id >= 1 && id <= products.length;
+}
+
 module.exports = {
   getProducts,
   getProductById,
   createProduct,
-  purchaseProductById
+  isValidProductId,
+  writeProducts
 };

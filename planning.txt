@@ -1,0 +1,8 @@
+Cart Bonus:
+- purchasing product requires creating a Cart
+- adding products to the Cart
+- completing Cart
+
+/carts -> list of all carts
+POST -> create a carts
+POST -> select cart
