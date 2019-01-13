@@ -10,8 +10,12 @@ Run: `npm start`
 
 - Node JS
 - Express JS
-- Mocha
-- Chai
+- Mocha JS
+- Chai JS
+
+### Run Tests
+
+- npm test
 
 ### Sample Operations
 
