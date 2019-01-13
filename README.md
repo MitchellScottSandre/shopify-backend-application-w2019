@@ -6,6 +6,13 @@ Install dependencies: `npm install`
 
 Run: `npm start`
 
+### Technologies Used
+
+- Node JS
+- Express JS
+- Mocha
+- Chai
+
 ### Sample Operations
 
 Get All Products
@@ -16,6 +23,9 @@ Get Product by ID:
 
 Create a new Product:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Soccer Ball", "price": 23.00, "inventory_count": 20 }' http://localhost:8000/products`
+
+Get All Carts
+`curl -i -X GET http://localhost:8000/carts`
 
 Create a new Cart:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "name": "My Cart" }' http://localhost:8000/carts`
