@@ -1,7 +1,9 @@
 ### Installation and Usage
 
 Download the code: `git clone https://github.com/MitchellScottSandre/shopify-backend-application-w2019.git`
+
 Install dependencies: `npm install`
+
 Run: `npm start`
 
 ### Sample Operations

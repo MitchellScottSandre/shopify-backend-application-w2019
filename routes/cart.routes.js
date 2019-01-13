@@ -3,6 +3,7 @@ const router = express.Router();
 const cart = require('../models/cart.model');
 const utils = require('../utils');
 
+// Cart Routes
 router.get('/', async (req, res) => {
   await cart
     .getCarts()

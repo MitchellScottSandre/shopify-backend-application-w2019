@@ -4,6 +4,8 @@ const product = require('../models/product.model');
 const cart = require('../models/cart.model');
 const utils = require('../utils');
 
+// Product Routes
+
 router.get('/', async (req, res) => {
   await product
     .getProducts()

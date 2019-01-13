@@ -18,12 +18,12 @@ function writeToFile(fileName, data) {
   });
 }
 
-// function isValidProductId(id) {
-//   return id >= 1 && id <= products.length;
-// }
+function readFromFile(fileName) {
+  return JSON.parse(fs.readFileSync(fileName, 'utf8'));
+}
 
 module.exports = {
   handleError,
-  writeToFile
-  // isValidProductId
+  writeToFile,
+  readFromFile
 };
