@@ -6,16 +6,14 @@ Install dependencies: `npm install`
 
 Run: `npm start`
 
+Run Tests: `npm test`
+
 ### Technologies Used
 
 - Node JS
 - Express JS
 - Mocha JS
 - Chai JS
-
-### Run Tests
-
-- npm test
 
 ### Sample Operations
 
