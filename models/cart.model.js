@@ -91,7 +91,7 @@ function setSelectedCart(id) {
   });
 }
 
-function addProductToCart(productId) {
+function addProductToSelectedCart(productId) {
   let cartsData = getCartsData();
   const products = product.getProductsData();
   return new Promise((resolve, reject) => {
@@ -197,7 +197,7 @@ module.exports = {
   createNewCart,
   getCartById,
   setSelectedCart,
-  addProductToCart,
+  addProductToSelectedCart,
   checkoutCart,
   writeCartsData
 };

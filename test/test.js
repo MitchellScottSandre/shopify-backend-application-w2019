@@ -14,21 +14,49 @@ const mockProductData = [
 
 describe('Carts Tests', () => {
   beforeEach(() => {
+    product.writeProducts(mockProductData);
+  });
+
+  it('should get all products', () => {
+    product.getProducts().then(response => {
+      assert.deepEqual(response, mockProductData);
+    });
+  });
+
+  it('should get product with id 2', () => {
+    product.getProductById(2).then(response => {
+      assert.deepEqual(response, mockProductData[1]);
+    });
+  });
+
+  it('should create a new product', () => {
+    const newProductId = mockProductData.length + 1;
+    const newProduct = { title: 'Video Game', price: 80.0, inventory_count: 10 };
+    product.createProduct(newProduct);
+
+    product.getProductById(newProductId).then(response => {
+      assert.deepEqual(response, {
+        ...newProduct,
+        id: newProductId
+      });
+    });
+  });
+});
+
+describe('Carts Tests', () => {
+  beforeEach(() => {
     cart.writeCartsData(mockCartsData);
     product.writeProducts(mockProductData);
   });
 
   it('should get all carts (no added products)', () => {
-    // cart.writeCartsData(mockCartsData);
-    return cart.getCarts().then(response => {
+    cart.getCarts().then(response => {
       assert.deepEqual(response, mockCartsData);
     });
   });
 
   it('should get by id (1)', () => {
-    // cart.writeCartsData(mockCartsData);
-
-    return cart.getCartById(1).then(response => {
+    cart.getCartById(1).then(response => {
       assert.deepEqual(response, mockCartsData.carts[0]);
     });
   });
@@ -43,11 +71,9 @@ describe('Carts Tests', () => {
       total_price: 0
     };
 
-    // cart.writeCartsData(mockCartsData);
-
     cart.createNewCart(cartName);
 
-    return cart.getCarts().then(response => {
+    cart.getCarts().then(response => {
       assert.deepEqual(response, {
         selected_cart_id: mockCartsData.selected_cart_id,
         carts: [...mockCartsData.carts, expectedCart]
@@ -58,19 +84,18 @@ describe('Carts Tests', () => {
   it('should set cart 1 to selected', () => {
     const newSelectedCartId = 1;
 
-    // cart.writeCartsData(mockCartsData);
     cart.setSelectedCart(newSelectedCartId);
 
-    return cart.getCarts().then(response => {
+    cart.getCarts().then(response => {
       assert(response.selected_cart_id == newSelectedCartId);
     });
   });
 
   it('should add product to selected cart', () => {
     cart.setSelectedCart(1);
-    cart.addProductToCart(1);
+    cart.addProductToSelectedCart(1);
 
-    return cart.getCartById(1).then(response => {
+    cart.getCartById(1).then(response => {
       assert.deepEqual(response, {
         ...mockCartsData.carts[0],
         product_ids: [1],
@@ -83,15 +108,26 @@ describe('Carts Tests', () => {
   it('should checkout the selected cart (with products)', () => {
     const beforeInventoryCount = mockProductData[0].inventory_count;
 
-    // cart.writeCartsData(mockCartsData);
-    // product.writeProducts(mockProductData);
-
     cart.setSelectedCart(1);
-    cart.addProductToCart(1);
+    cart.addProductToSelectedCart(1);
     cart.checkoutCart(1);
 
-    return product.getProductById(1).then(p => {
+    product.getProductById(1).then(p => {
       assert(p.inventory_count === beforeInventoryCount - 1);
     });
+  });
+
+  it('should try to get cart by id (bad id)', () => {
+    cart
+      .getCartById(2)
+      .then(response => assert(false, true))
+      .catch(err => assert(true, true));
+  });
+
+  it('should try to add product to selected cart (no selected cart)', () => {
+    cart
+      .addProductToSelectedCart(1)
+      .then(response => assert(false, true))
+      .catch(err => assert(true, true));
   });
 });
