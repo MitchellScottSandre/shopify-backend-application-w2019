@@ -80,5 +80,6 @@ module.exports = {
   getProductById,
   createProduct,
   isValidProductId,
-  writeProducts
+  writeProducts,
+  getProductsData
 };

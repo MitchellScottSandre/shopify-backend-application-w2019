@@ -24,8 +24,11 @@ Get Product by ID:
 Create a new Product:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Soccer Ball", "price": 23.00, "inventory_count": 20 }' http://localhost:8000/products`
 
-Get All Carts
+Get All Carts:
 `curl -i -X GET http://localhost:8000/carts`
+
+Get Cart by ID:
+`curl -i -X GET http://localhost:8000/carts/1`
 
 Create a new Cart:
 `curl -i -X POST -H "Content-Type: application/json" -d '{ "name": "My Cart" }' http://localhost:8000/carts`
