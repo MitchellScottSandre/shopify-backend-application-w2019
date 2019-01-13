@@ -1,10 +1,11 @@
 const productsFileName = '../data/products.json';
-const products = require(productsFileName);
 const product = require('../models/product.model');
 const utils = require('../utils');
 
 function getCarts() {
   const cartsData = getCartsData();
+  const products = product.getProductsData();
+
   return new Promise((resolve, reject) => {
     let carts = cartsData.carts.map(cart => {
       let totalPrice = 0.0;
@@ -29,6 +30,7 @@ function getCarts() {
 
 function getCartById(id) {
   const cartsData = getCartsData();
+  const products = product.getProductsData();
   return new Promise((resolve, reject) => {
     if (!isValidCartId(id)) {
       return reject({
@@ -91,6 +93,7 @@ function setSelectedCart(id) {
 
 function addProductToCart(productId) {
   let cartsData = getCartsData();
+  const products = product.getProductsData();
   return new Promise((resolve, reject) => {
     if (!product.isValidProductId(productId)) {
       return reject({
@@ -129,6 +132,7 @@ function addProductToCart(productId) {
 
 function checkoutCart(id) {
   let cartsData = getCartsData();
+  const products = product.getProductsData();
   return new Promise((resolve, reject) => {
     if (!isValidCartId(id)) {
       return reject({

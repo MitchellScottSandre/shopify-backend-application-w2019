@@ -2,31 +2,31 @@ var assert = require('chai').assert;
 const cart = require('../models/cart.model');
 const product = require('../models/product.model');
 
+const mockCartsData = {
+  selected_cart_id: null,
+  carts: [{ id: 1, name: 'My Cart', product_ids: [], products: [], total_price: 0 }]
+};
+
+const mockProductData = [
+  { id: 1, title: 'Toy Car', price: 4, inventory_count: 54 },
+  { id: 2, title: 'Soccer Ball', price: 20, inventory_count: 10 }
+];
+
 describe('Carts Tests', () => {
   beforeEach(() => {
     cart.writeCartsData(mockCartsData);
     product.writeProducts(mockProductData);
   });
 
-  const mockCartsData = {
-    selected_cart_id: null,
-    carts: [{ id: 1, name: 'My Cart', product_ids: [], products: [], total_price: 0 }]
-  };
-
-  const mockProductData = [
-    { id: 1, title: 'Toy Car', price: 4, inventory_count: 54 },
-    { id: 2, title: 'Soccer Ball', price: 20, inventory_count: 10 }
-  ];
-
   it('should get all carts (no added products)', () => {
-    cart.writeCartsData(mockCartsData);
+    // cart.writeCartsData(mockCartsData);
     return cart.getCarts().then(response => {
       assert.deepEqual(response, mockCartsData);
     });
   });
 
   it('should get by id (1)', () => {
-    cart.writeCartsData(mockCartsData);
+    // cart.writeCartsData(mockCartsData);
 
     return cart.getCartById(1).then(response => {
       assert.deepEqual(response, mockCartsData.carts[0]);
@@ -43,7 +43,7 @@ describe('Carts Tests', () => {
       total_price: 0
     };
 
-    cart.writeCartsData(mockCartsData);
+    // cart.writeCartsData(mockCartsData);
 
     cart.createNewCart(cartName);
 
@@ -58,7 +58,7 @@ describe('Carts Tests', () => {
   it('should set cart 1 to selected', () => {
     const newSelectedCartId = 1;
 
-    cart.writeCartsData(mockCartsData);
+    // cart.writeCartsData(mockCartsData);
     cart.setSelectedCart(newSelectedCartId);
 
     return cart.getCarts().then(response => {
@@ -67,8 +67,6 @@ describe('Carts Tests', () => {
   });
 
   it('should add product to selected cart', () => {
-    cart.writeCartsData(mockCartsData);
-    product.writeProducts(mockProductData);
     cart.setSelectedCart(1);
     cart.addProductToCart(1);
 
@@ -85,8 +83,8 @@ describe('Carts Tests', () => {
   it('should checkout the selected cart (with products)', () => {
     const beforeInventoryCount = mockProductData[0].inventory_count;
 
-    cart.writeCartsData(mockCartsData);
-    product.writeProducts(mockProductData);
+    // cart.writeCartsData(mockCartsData);
+    // product.writeProducts(mockProductData);
 
     cart.setSelectedCart(1);
     cart.addProductToCart(1);
