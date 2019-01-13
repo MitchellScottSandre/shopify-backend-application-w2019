@@ -1,1 +1,1 @@
-{"selected_cart_id":null,"carts":[{"id":1,"name":"My Cart","product_ids":[],"products":[],"total_price":0}]}
+{"selected_cart_id":"1","carts":[{"id":1,"name":"My Cart","product_ids":["1"],"products":[],"total_price":0},{"id":2,"name":"My Other Cart","product_ids":[],"total_price":0}]}

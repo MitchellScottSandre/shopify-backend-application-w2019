@@ -8,6 +8,10 @@ Run: `npm start`
 
 Run Tests: `npm test`
 
+Notes:
+
+- Need to create a cart, select that cart, and add products to that cart to checkout those products
+
 ### Technologies Used
 
 - Node JS
@@ -24,7 +28,7 @@ Get Product by ID:
 `curl -i -X GET http://localhost:8000/products/1`
 
 Create a new Product:
-`curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Soccer Ball", "price": 23.00, "inventory_count": 20 }' http://localhost:8000/products`
+`curl -i -X POST -H "Content-Type: application/json" -d '{ "title": "Video Game", "price": 80.00, "inventory_count": 55 }' http://localhost:8000/products`
 
 Get All Carts:
 `curl -i -X GET http://localhost:8000/carts`
