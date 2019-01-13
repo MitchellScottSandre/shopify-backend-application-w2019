@@ -1,15 +1,16 @@
 const productsFileName = '../data/products.json';
 const cartsDataFileName = '../data/carts.json';
-const products = require(productsFileName);
 const utils = require('../utils');
 
 function getProducts() {
+  const products = getProductsData();
   return new Promise((resolve, reject) => {
     resolve(products.filter(p => p.inventory_count > 0));
   });
 }
 
 function getProductById(id) {
+  const products = getProductsData();
   return new Promise((resolve, reject) => {
     if (!isValidProductId(id)) {
       return reject({
@@ -25,6 +26,7 @@ function getProductById(id) {
 }
 
 function createProduct(product) {
+  let products = getProductsData();
   return new Promise((resolve, reject) => {
     if (!isValidPostProduct(product)) {
       return reject({
@@ -59,11 +61,17 @@ function writeProducts(data) {
   utils.writeToFile('data/products.json', data);
 }
 
+function getProductsData() {
+  return utils.readFromFile('data/products.json');
+}
+
 function getNextProductId() {
+  const products = getProductsData();
   return products.length + 1;
 }
 
 function isValidProductId(id) {
+  const products = getProductsData();
   return id >= 1 && id <= products.length;
 }
 

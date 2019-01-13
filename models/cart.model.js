@@ -1,11 +1,10 @@
 const productsFileName = '../data/products.json';
-const cartsDataFileName = '../data/carts.json';
 const products = require(productsFileName);
 const product = require('../models/product.model');
-const cartsData = require(cartsDataFileName);
 const utils = require('../utils');
 
 function getCarts() {
+  const cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     let carts = cartsData.carts.map(cart => {
       let totalPrice = 0.0;
@@ -29,6 +28,7 @@ function getCarts() {
 }
 
 function getCartById(id) {
+  const cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     if (!isValidCartId(id)) {
       return reject({
@@ -54,6 +54,7 @@ function getCartById(id) {
 }
 
 function createNewCart(cartName) {
+  let cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     const newCart = {
       id: getNextCartId(),
@@ -64,13 +65,14 @@ function createNewCart(cartName) {
 
     cartsData.carts.push(newCart);
 
-    writeCartsData();
+    writeCartsData(cartsData);
 
     resolve();
   });
 }
 
 function setSelectedCart(id) {
+  let cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     if (!isValidCartId(id)) {
       return reject({
@@ -81,13 +83,14 @@ function setSelectedCart(id) {
 
     cartsData.selected_cart_id = id;
 
-    writeCartsData();
+    writeCartsData(cartsData);
 
     resolve();
   });
 }
 
 function addProductToCart(productId) {
+  let cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     if (!product.isValidProductId(productId)) {
       return reject({
@@ -118,13 +121,14 @@ function addProductToCart(productId) {
       product_ids: [...prevProductIDs, productId]
     };
 
-    writeCartsData();
+    writeCartsData(cartsData);
 
     resolve(cartsData.carts[selectedID - 1]);
   });
 }
 
 function checkoutCart(id) {
+  let cartsData = getCartsData();
   return new Promise((resolve, reject) => {
     if (!isValidCartId(id)) {
       return reject({
@@ -160,24 +164,28 @@ function checkoutCart(id) {
 
 // Helper Functions
 
+function getCartsData() {
+  return utils.readFromFile('data/carts.json');
+}
+
 function isValidCartId(id) {
-  return id >= 1 && id <= cartsData.carts.length;
+  return id >= 1 && id <= getCartsData().carts.length;
 }
 
 function getNextCartId() {
-  return cartsData.carts.length + 1;
+  return getCartsData().carts.length + 1;
 }
 
-function writeCartsData() {
-  utils.writeToFile('data/carts.json', cartsData);
+function writeCartsData(data) {
+  utils.writeToFile('data/carts.json', data);
 }
 
 function selectedCartExists() {
-  return cartsData.selected_cart_id != null;
+  return getCartsData().selected_cart_id != null;
 }
 
 function isSelectedCart(id) {
-  return cartsData.selected_cart_id == id;
+  return getCartsData().selected_cart_id == id;
 }
 
 module.exports = {
@@ -186,5 +194,6 @@ module.exports = {
   getCartById,
   setSelectedCart,
   addProductToCart,
-  checkoutCart
+  checkoutCart,
+  writeCartsData
 };
